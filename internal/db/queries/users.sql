@@ -98,7 +98,7 @@ WHERE "phone" = $1
 
 
 
--- name: UpdateUserVerification :many
+-- name: UpdateUserVerification :one
 UPDATE "accounts"."users"
 SET 
     "is_phone_verified" = $2,

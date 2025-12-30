@@ -363,7 +363,7 @@ func (q *Queries) UpdateUserNIN(ctx context.Context, arg UpdateUserNINParams) (U
 	return i, err
 }
 
-const updateUserVerification = `-- name: UpdateUserVerification :many
+const updateUserVerification = `-- name: UpdateUserVerification :one
 UPDATE "accounts"."users"
 SET 
     "is_phone_verified" = $2,
@@ -390,27 +390,14 @@ type UpdateUserVerificationRow struct {
 	IsNinVerified   sql.NullBool `db:"is_nin_verified" json:"is_nin_verified"`
 }
 
-func (q *Queries) UpdateUserVerification(ctx context.Context, arg UpdateUserVerificationParams) ([]UpdateUserVerificationRow, error) {
-	rows, err := q.db.Query(ctx, updateUserVerification,
+func (q *Queries) UpdateUserVerification(ctx context.Context, arg UpdateUserVerificationParams) (UpdateUserVerificationRow, error) {
+	row := q.db.QueryRow(ctx, updateUserVerification,
 		arg.ID,
 		arg.IsPhoneVerified,
 		arg.IsEmailVerified,
 		arg.IsNinVerified,
 	)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	items := []UpdateUserVerificationRow{}
-	for rows.Next() {
-		var i UpdateUserVerificationRow
-		if err := rows.Scan(&i.IsPhoneVerified, &i.IsEmailVerified, &i.IsNinVerified); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
+	var i UpdateUserVerificationRow
+	err := row.Scan(&i.IsPhoneVerified, &i.IsEmailVerified, &i.IsNinVerified)
+	return i, err
 }

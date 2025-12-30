@@ -22,7 +22,7 @@ type Querier interface {
 	GetUserStatusByPhone(ctx context.Context, phone sql.NullString) (GetUserStatusByPhoneRow, error)
 	GetUserVerification(ctx context.Context, id uuid.UUID) (GetUserVerificationRow, error)
 	UpdateUserNIN(ctx context.Context, arg UpdateUserNINParams) (UpdateUserNINRow, error)
-	UpdateUserVerification(ctx context.Context, arg UpdateUserVerificationParams) ([]UpdateUserVerificationRow, error)
+	UpdateUserVerification(ctx context.Context, arg UpdateUserVerificationParams) (UpdateUserVerificationRow, error)
 }
 
 var _ Querier = (*Queries)(nil)
