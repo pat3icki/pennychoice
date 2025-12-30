@@ -6,10 +6,23 @@ package sqlc
 
 import (
 	"context"
+	"database/sql"
+
+	"github.com/google/uuid"
 )
 
 type Querier interface {
 	CreateUser(ctx context.Context, arg CreateUserParams) (AccountsUser, error)
+	// Login by Email with Password
+	GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error)
+	// Login by Email with Password
+	GetUserByEmailN(ctx context.Context, email string) (GetUserByEmailNRow, error)
+	GetUserByPhoneN(ctx context.Context, phone sql.NullString) (GetUserByPhoneNRow, error)
+	GetUserStatusByEmail(ctx context.Context, email string) (GetUserStatusByEmailRow, error)
+	GetUserStatusByPhone(ctx context.Context, phone sql.NullString) (GetUserStatusByPhoneRow, error)
+	GetUserVerification(ctx context.Context, id uuid.UUID) (GetUserVerificationRow, error)
+	UpdateUserNIN(ctx context.Context, arg UpdateUserNINParams) (UpdateUserNINRow, error)
+	UpdateUserVerification(ctx context.Context, arg UpdateUserVerificationParams) ([]UpdateUserVerificationRow, error)
 }
 
 var _ Querier = (*Queries)(nil)
