@@ -1,0 +1,36 @@
+version: "2"
+sql:
+  - schema: "internal/db/schema"
+    queries: "internal/db/queries"
+    engine: "postgresql"
+    gen:
+      go:
+        # Matches your folder structure
+        package: "sqlc"
+        out: "internal/db/sqlc"
+        
+        # Specifies pgx/v4 driver
+        sql_package: "pgx/v4"
+        
+        # helpful generation settings
+        emit_json_tags: true
+        emit_db_tags: true
+        emit_interface: true      # Generates a Querier interface (great for mocking/testing)
+        emit_empty_slices: true   # Returns []T{} instead of nil for empty results
+        
+        # Type Overrides (Recommended for your schema)
+        overrides:
+          # Maps SQL UUID to google/uuid (standard Go practice)
+          - db_type: "uuid"
+            go_type: "github.com/google/uuid.UUID"
+          
+          # Maps numeric/decimal to pgtype (preserves precision for finance)
+          - db_type: "numeric"
+            go_type: "github.com/jackc/pgx/v4/pgtype.Numeric"
+            
+          # Maps jsonb to generic bytes or you can map to a specific struct
+          - db_type: "jsonb"
+            go_type: "github.com/jackc/pgx/v4/pgtype.JSON"
+            
+          - db_type: "jsonb"
+            go_type: "github.com/jackc/pgx/v4/pgtype.JSON"
