@@ -10,6 +10,28 @@ import (
 	"github.com/google/uuid"
 )
 
+type AccountsOrganisation struct {
+	ID              uuid.UUID      `db:"id" json:"id"`
+	Name            sql.NullString `db:"name" json:"name"`
+	Description     sql.NullString `db:"description" json:"description"`
+	CreatorUser     uuid.UUID      `db:"creator_user" json:"creator_user"`
+	MaxCoOrganisers sql.NullInt16  `db:"max_co_organisers" json:"max_co_organisers"`
+	MaxActiveEvents sql.NullInt16  `db:"max_active_events" json:"max_active_events"`
+	TotalMembers    sql.NullInt16  `db:"total_members" json:"total_members"`
+	TotalEvents     sql.NullInt16  `db:"total_events" json:"total_events"`
+	ActiveEvents    sql.NullInt16  `db:"active_events" json:"active_events"`
+	CreatedAt       sql.NullTime   `db:"created_at" json:"created_at"`
+}
+
+type AccountsOrganisationMember struct {
+	OrgID     uuid.UUID     `db:"org_id" json:"org_id"`
+	Position  sql.NullInt32 `db:"position" json:"position"`
+	Member    uuid.UUID     `db:"member" json:"member"`
+	IsAdmin   bool          `db:"is_admin" json:"is_admin"`
+	InivtedBy uuid.NullUUID `db:"inivted_by" json:"inivted_by"`
+	Date      interface{}   `db:"date" json:"date"`
+}
+
 type AccountsUser struct {
 	ID              uuid.UUID      `db:"id" json:"id"`
 	FirstName       string         `db:"first_name" json:"first_name"`

@@ -47,3 +47,39 @@ CREATE TABLE "accounts"."users" (
 
 );
 
+CREATE TABLE "accounts"."organisations" (
+  "id" UUID PRIMARY KEY,
+  "name" VARCHAR(255) UNIQUE,
+  "description" VARCHAR(500),
+  "creator_user" uuid NOT NULL,
+  "max_co_organisers" SMALLINT DEFAULT 10,
+  "max_active_events" SMALLINT DEFAULT 12,
+  "total_members" SMALLINT,
+  "total_events" SMALLINT DEFAULT 0,
+  "active_events" SMALLINT DEFAULT 0 CHECK ( "active_events" <= "total_events"),
+  "created_at" TIMESTAMP DEFAULT N0W(),
+
+  CONSTRAINT fk_users_org_creator 
+      FOREIGN KEY ("creator_userid") 
+      REFERENCES "accounts"."users" ("id")
+      ON DELETE CASCADE
+);
+
+CREATE TABLE "accounts"."organisation_members" (
+  "org_id" UUID NOT NULL,
+  "position" int,
+  "member" UUID,
+  "is_admin" BOOLEAN NOT NULL,
+  "inivted_by" UUID,
+  "date" DATETIME,
+
+  PRIMARY KEY (org_id, member),
+  UNIQUE (org_id, position),
+  
+  CONSTRAINT fk_orgs_org_members_id
+  FOREIGN KEY ("org_id") 
+  REFERENCES "accounts"."organisations" ("id")
+  ON DELETE CASCADE
+);
+
+
