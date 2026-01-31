@@ -5,7 +5,7 @@ import "time"
 type UserStatus string
 
 const (
-	tatusActive     UserStatus = "active"
+	StatusActive    UserStatus = "active"
 	StatusDeleted   UserStatus = "deleted"
 	StatusSuspended UserStatus = "suspended"
 )
@@ -15,11 +15,14 @@ func (u UserStatus) Is(c UserStatus) bool {
 }
 
 type UserProfile struct {
-	FirstName   string    `json:"first_name"`
-	MiddleName  string    `json:"middle_name,omitempty"`
-	LastName    string    `json:"last_name"`
-	DateOfBirth time.Time `json:"date_of_birth"`
-	Gender      rune      `json:"gender"`
+	FirstName       string    `json:"first_name"`
+	MiddleName      string    `json:"middle_name,omitempty"`
+	LastName        string    `json:"last_name"`
+	DateOfBirth     time.Time `json:"date_of_birth"`
+	Gender          rune      `json:"gender"`
+	Email           string
+	Phone           string
+	IsNumberWhatApp bool
 }
 
 type UserVParameter uint8
@@ -39,27 +42,16 @@ type UserVerificationParams struct {
 }
 
 type CreateUserParams struct {
-	Profile        UserProfile
-	Email          string
-	Phone          string
-	IsPhoneWhatApp bool
-	Verification   UserVerificationParams
-	HashType       string
-	Password       string
-	PIN            string
-	NIN            string
+	Profile      UserProfile
+	Verification *UserVerificationParams
+	Password     string
 }
 
 type CreateUserResult struct {
-	AuthrizationID  string
-	Profile         UserProfile
-	Status          UserStatus
-	Email           string
-	Phone           string
-	IsPhoneWhatsApp bool
+	AuthrizationID string
+	Profile        UserProfile
+	Status         UserStatus
 	// Verification
-	HashPassword string
-	HashPIN      string
 }
 
 type LoginUserParams struct {
