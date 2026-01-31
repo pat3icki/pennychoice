@@ -1,9 +1,4 @@
-package utils
-
-type ParamValue struct {
-	Type  uint8
-	Value string
-}
+package types
 
 type Unique uint8
 
