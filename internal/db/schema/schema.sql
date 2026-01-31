@@ -54,7 +54,7 @@ CREATE TABLE "accounts"."notifications" (
   "description" TEXT NOT NULL,
   "status" VARCHAR(20) DEFAULT 'unread' CHECK (status IN ('unread', 'read', 'archived')),
   "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  "source" TEXT
+  "source" VARCHAR(50) NOT NULL CHECK (source IN ('organisation', 'event', 'system')),
   "source_target_id" TEXT
   "read_at" TIMESTAMP,
 
@@ -62,7 +62,7 @@ CREATE TABLE "accounts"."notifications" (
     FOREIGN KEY ("user_id") 
     REFERENCES "accounts"."users" ("id") 
     ON DELETE CASCADE
-); <
+); 
 
 -- Organisations Table
 CREATE TABLE "accounts"."organisations" (
@@ -76,12 +76,14 @@ CREATE TABLE "accounts"."organisations" (
   "total_events" SMALLINT DEFAULT 0,
   "active_events" SMALLINT DEFAULT 0 CHECK ("active_events" <= "total_events"),
   "created_at" TIMESTAMP DEFAULT NOW(),
+  "permissions" JSONB,
 
   CONSTRAINT fk_users_org_creator 
       FOREIGN KEY ("creator_user") 
       REFERENCES "accounts"."users" ("id")
       ON DELETE CASCADE
 );
+
 
 -- Members Table
 CREATE TABLE "accounts"."organisations_members" (
@@ -100,7 +102,9 @@ CREATE TABLE "accounts"."organisations_members" (
   CONSTRAINT fk_user_members_id
     FOREIGN KEY ("member_id") REFERENCES "accounts"."users" ("id") ON DELETE CASCADE
 );
--- 3. Request Table
+
+
+--  Request Table
 CREATE TABLE "accounts"."request_organisation_member" (
   "request_id" SERIAL PRIMARY KEY,
   "recipient_user_id" UUID,
