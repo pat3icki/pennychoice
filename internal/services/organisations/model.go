@@ -1,12 +1,14 @@
 package organisations
 
-import "github.com/google/uuid"
+import (
+	"encoding/json"
+)
 
 type CreateOrganisationParams struct {
-	UserID     uuid.UUID
-	Namee      string
-	Decription string
-	Tags       []string
+	Namee       string
+	Decription  string
+	Tags        []string
+	Permissions json.RawMessage
 }
 
 type AddMember struct {

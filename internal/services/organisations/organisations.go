@@ -9,7 +9,7 @@ import (
 type Service struct {
 }
 
-func (s Service) CreateOrganisation(ctx context.Context, create_org *CreateOrganisationParams)
+func (s Service) CreateOrganisation(ctx context.Context, create_usr types.User, create_org *CreateOrganisationParams)
 
 func (s Service) MakeUserAdmin(ctx context.Context, adm_usr types.User)
 

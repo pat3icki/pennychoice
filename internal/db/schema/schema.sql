@@ -55,7 +55,7 @@ CREATE TABLE "accounts"."notifications" (
   "status" VARCHAR(20) DEFAULT 'unread' CHECK (status IN ('unread', 'read', 'archived')),
   "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   "source" VARCHAR(50) NOT NULL CHECK (source IN ('organisation', 'event', 'system')),
-  "source_target_id" TEXT
+  "source_target_id" TEXT,
   "read_at" TIMESTAMP,
 
   CONSTRAINT fk_notifications_user 

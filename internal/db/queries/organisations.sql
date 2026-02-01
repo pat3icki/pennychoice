@@ -1,5 +1,5 @@
 -- Insert into organisations
--- CreateOrganisation
+-- name: CreateOrganisation :one 
 INSERT INTO "accounts"."organisations" (
     "id", 
     "name", 

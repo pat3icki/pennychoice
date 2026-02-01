@@ -5,52 +5,76 @@
 package sqlc
 
 import (
-	"database/sql"
-
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
-type AccountsOrganisation struct {
-	ID              uuid.UUID      `db:"id" json:"id"`
-	Name            sql.NullString `db:"name" json:"name"`
-	Description     sql.NullString `db:"description" json:"description"`
-	CreatorUser     uuid.UUID      `db:"creator_user" json:"creator_user"`
-	MaxCoOrganisers sql.NullInt16  `db:"max_co_organisers" json:"max_co_organisers"`
-	MaxActiveEvents sql.NullInt16  `db:"max_active_events" json:"max_active_events"`
-	TotalMembers    sql.NullInt16  `db:"total_members" json:"total_members"`
-	TotalEvents     sql.NullInt16  `db:"total_events" json:"total_events"`
-	ActiveEvents    sql.NullInt16  `db:"active_events" json:"active_events"`
-	CreatedAt       sql.NullTime   `db:"created_at" json:"created_at"`
+type AccountsNotification struct {
+	MsgID          int64            `db:"msg_id" json:"msg_id"`
+	UserID         uuid.UUID        `db:"user_id" json:"user_id"`
+	Title          string           `db:"title" json:"title"`
+	Description    string           `db:"description" json:"description"`
+	Status         pgtype.Text      `db:"status" json:"status"`
+	CreatedAt      pgtype.Timestamp `db:"created_at" json:"created_at"`
+	Source         string           `db:"source" json:"source"`
+	SourceTargetID pgtype.Text      `db:"source_target_id" json:"source_target_id"`
+	ReadAt         pgtype.Timestamp `db:"read_at" json:"read_at"`
 }
 
-type AccountsOrganisationMember struct {
-	OrgID     uuid.UUID     `db:"org_id" json:"org_id"`
-	Position  sql.NullInt32 `db:"position" json:"position"`
-	Member    uuid.UUID     `db:"member" json:"member"`
-	IsAdmin   bool          `db:"is_admin" json:"is_admin"`
-	InivtedBy uuid.NullUUID `db:"inivted_by" json:"inivted_by"`
-	Date      interface{}   `db:"date" json:"date"`
+type AccountsOrganisation struct {
+	ID              uuid.UUID        `db:"id" json:"id"`
+	Name            pgtype.Text      `db:"name" json:"name"`
+	Description     pgtype.Text      `db:"description" json:"description"`
+	CreatorUser     uuid.UUID        `db:"creator_user" json:"creator_user"`
+	MaxCoOrganisers pgtype.Int2      `db:"max_co_organisers" json:"max_co_organisers"`
+	MaxActiveEvents pgtype.Int2      `db:"max_active_events" json:"max_active_events"`
+	TotalMembers    pgtype.Int2      `db:"total_members" json:"total_members"`
+	TotalEvents     pgtype.Int2      `db:"total_events" json:"total_events"`
+	ActiveEvents    pgtype.Int2      `db:"active_events" json:"active_events"`
+	CreatedAt       pgtype.Timestamp `db:"created_at" json:"created_at"`
+	Permissions     []byte           `db:"permissions" json:"permissions"`
+}
+
+type AccountsOrganisationsMember struct {
+	OrgID     uuid.UUID        `db:"org_id" json:"org_id"`
+	MemberID  uuid.UUID        `db:"member_id" json:"member_id"`
+	Position  pgtype.Int4      `db:"position" json:"position"`
+	IsAdmin   bool             `db:"is_admin" json:"is_admin"`
+	InvitedBy pgtype.UUID      `db:"invited_by" json:"invited_by"`
+	JoinedAt  pgtype.Timestamp `db:"joined_at" json:"joined_at"`
+}
+
+type AccountsRequestOrganisationMember struct {
+	RequestID        int32            `db:"request_id" json:"request_id"`
+	RecipientUserID  pgtype.UUID      `db:"recipient_user_id" json:"recipient_user_id"`
+	FromUserID       uuid.UUID        `db:"from_user_id" json:"from_user_id"`
+	FromUserName     string           `db:"from_user_name" json:"from_user_name"`
+	OrgID            uuid.UUID        `db:"org_id" json:"org_id"`
+	OrgName          string           `db:"org_name" json:"org_name"`
+	Verdict          pgtype.Text      `db:"verdict" json:"verdict"`
+	VerdictTimestamp pgtype.Timestamp `db:"verdict_timestamp" json:"verdict_timestamp"`
+	InvitedTimestamp pgtype.Timestamp `db:"invited_timestamp" json:"invited_timestamp"`
 }
 
 type AccountsUser struct {
-	ID              uuid.UUID      `db:"id" json:"id"`
-	FirstName       string         `db:"first_name" json:"first_name"`
-	MiddleName      sql.NullString `db:"middle_name" json:"middle_name"`
-	LastName        string         `db:"last_name" json:"last_name"`
-	DateOfBirth     sql.NullTime   `db:"date_of_birth" json:"date_of_birth"`
-	Gender          sql.NullString `db:"gender" json:"gender"`
-	Status          sql.NullString `db:"status" json:"status"`
-	Email           string         `db:"email" json:"email"`
-	Phone           sql.NullString `db:"phone" json:"phone"`
-	IsWhatsappPhone sql.NullBool   `db:"is_whatsapp_phone" json:"is_whatsapp_phone"`
-	IsPhoneVerified sql.NullBool   `db:"is_phone_verified" json:"is_phone_verified"`
-	IsEmailVerified sql.NullBool   `db:"is_email_verified" json:"is_email_verified"`
-	IsNinVerified   sql.NullBool   `db:"is_nin_verified" json:"is_nin_verified"`
-	HashType        string         `db:"hash_type" json:"hash_type"`
-	HashPassword    string         `db:"hash_password" json:"hash_password"`
-	HashPin         string         `db:"hash_pin" json:"hash_pin"`
-	HashTableSeq    sql.NullInt16  `db:"hash_table_seq" json:"hash_table_seq"`
-	EncryptedNin    sql.NullString `db:"encrypted_nin" json:"encrypted_nin"`
-	DeletedAt       sql.NullTime   `db:"deleted_at" json:"deleted_at"`
-	CreatedAt       sql.NullTime   `db:"created_at" json:"created_at"`
+	ID              uuid.UUID        `db:"id" json:"id"`
+	FirstName       string           `db:"first_name" json:"first_name"`
+	MiddleName      pgtype.Text      `db:"middle_name" json:"middle_name"`
+	LastName        string           `db:"last_name" json:"last_name"`
+	DateOfBirth     pgtype.Date      `db:"date_of_birth" json:"date_of_birth"`
+	Gender          pgtype.Text      `db:"gender" json:"gender"`
+	Status          pgtype.Text      `db:"status" json:"status"`
+	Email           string           `db:"email" json:"email"`
+	Phone           pgtype.Text      `db:"phone" json:"phone"`
+	IsWhatsappPhone pgtype.Bool      `db:"is_whatsapp_phone" json:"is_whatsapp_phone"`
+	IsPhoneVerified pgtype.Bool      `db:"is_phone_verified" json:"is_phone_verified"`
+	IsEmailVerified pgtype.Bool      `db:"is_email_verified" json:"is_email_verified"`
+	IsNinVerified   pgtype.Bool      `db:"is_nin_verified" json:"is_nin_verified"`
+	HashType        string           `db:"hash_type" json:"hash_type"`
+	HashPassword    string           `db:"hash_password" json:"hash_password"`
+	HashPin         string           `db:"hash_pin" json:"hash_pin"`
+	HashTableSeq    pgtype.Int2      `db:"hash_table_seq" json:"hash_table_seq"`
+	EncryptedNin    pgtype.Text      `db:"encrypted_nin" json:"encrypted_nin"`
+	DeletedAt       pgtype.Timestamp `db:"deleted_at" json:"deleted_at"`
+	CreatedAt       pgtype.Timestamp `db:"created_at" json:"created_at"`
 }

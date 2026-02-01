@@ -10,7 +10,7 @@ sql:
         out: "internal/db/sqlc"
         
         # Specifies pgx/v4 driver
-        sql_package: "pgx/v4"
+        sql_package: "pgx/v5"
         
         # helpful generation settings
         emit_json_tags: true

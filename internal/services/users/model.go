@@ -1,6 +1,10 @@
 package users
 
-import "time"
+import (
+	"time"
+
+	"github.com/pat3icki/pennychoice/types"
+)
 
 type UserStatus string
 
@@ -54,14 +58,13 @@ type CreateUserResult struct {
 	// Verification
 }
 
-type LoginUserParams struct {
-	ValueType       uint8
-	Value           string
+type LoginParams struct {
+	User            types.User
 	Password        string
 	ResquestProfile bool
 }
 
-type LoginUserResult struct {
+type User struct {
 	AuthrizationID string
 	Profile        *UserProfile
 }
@@ -71,4 +74,10 @@ type ResquestPIN struct {
 }
 type ResquestPINResult struct {
 	RpinID string
+}
+
+type RequestKey struct {
+	ID      int64
+	Purpose string
+	Preiod  time.Time
 }
