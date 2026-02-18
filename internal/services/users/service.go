@@ -1,10 +1,14 @@
 package users
 
 import (
-	"github.com/pat3icki/pennychoice/internal/db/redis"
+	"sync"
+
+	"github.com/pat3icki/pennychoice/internal/db/sqlc"
 )
 
 type Service struct {
-	PostgresSQL SQL
-	Redis       redis.Client
+	mu                sync.RWMutex
+	PostgreSQL        *sqlc.Queries
+	Redis             Cache
+	UserAnyIdentifier bool
 }

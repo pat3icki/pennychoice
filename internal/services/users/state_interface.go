@@ -13,6 +13,7 @@ type SQL interface {
 	Query(context.Context, string, ...interface{}) (pgx.Rows, error)
 	QueryRow(context.Context, string, ...interface{}) pgx.Row
 }
-type Redis interface {
+type Cache interface {
 	Set(key, value []byte, tll time.Time) error
+	Get(key []byte) ([]byte, error)
 }

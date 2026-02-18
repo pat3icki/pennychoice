@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+
 	// "github.com/pat3icki/pennychoice/internal/states"
 
 	"github.com/pat3icki/pennychoice/types"
@@ -13,12 +14,41 @@ import (
 func (s *Service) CreateUser(ctx context.Context, usr *CreateUserParams) (*CreateUserResult, error) {
 	return nil, nil
 }
-func (s *Service) GetUserProfile(ctx context.Context, auth_id string) (*UserProfile, error)
 
-func (s *Service) DeactiviateUser(ctx context.Context, usr types.User, expected_pass string, period time.Time)
+func (s *Service) VerifiyFalse(ctx context.Context, usr types.User, ver types.FlagUniqueness) error {
+	return nil
+}
+
+func (s *Service) GetUserProfile(ctx context.Context, usr types.User) (*UserProfile, error)
+
+func (s *Service) DeactiviateUser(ctx context.Context, usr types.User, expected_pin string, period time.Time) {
+
+}
 
 func (s *Service) SuspendUser(ctx context.Context, usr_id uuid.UUID)
 
-func (s *Service) Login(ctx context.Context, req_key int64, params LoginParams) (User, error)
+// func (s *Service) Login(ctx context.Context, req_key int64, params LoginParams) (usr User, err error) {
+// 	id_info := sflake.Describe(req_key, sflake.DefaultEpoch)
+// 	if id_info.NodeID != REQUEST_KEY_SFLAKE_NODE {
+// 		return User{}, errors.ErrUnsupported
+// 	}
+// 	_, err = s.Redis.Get(utils.Convert.IntBytes(req_key))
+// 	if err != nil {
+// 		return
+// 	}
+// 	switch params.User.Uniqueness {
+// 	case types.Unique_Email:
+// 		_, err := s.PostgreSQL.GetUserByEmail(ctx, params.User.Value)
+// 		if err != nil {
+// 			return User{}, err
+// 		}
+// 	case types.Unique_Phone:
+// 		// TODO: database query
+// 	default:
+// 		err = errors.New("user uniqueness must be either phone or email")
+// 		return
+// 	}
+// 	// TODO: complete
+// 	return
 
-func (s *Service) CreateRequestKey(ctx context.Context, req *RequestKey) error
+// }

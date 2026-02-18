@@ -4,9 +4,9 @@ INSERT INTO "accounts"."organisations" (
     "id", 
     "name", 
     "description", 
-    "creator_user", 
+    "creator_user_id", 
     "max_co_organisers", 
-    "max_active_events"
+    "max_active_campaign"
     )
 VALUES ($1, $2, $3, $4, $5, $6)
 RETURNING *;
@@ -18,7 +18,7 @@ SET
     "name" = $2,
     "description" = $3,
     "max_co_organisers" = $4,
-    "max_active_events" = $5
+    "max_active_campaign" = $5
 WHERE 
     "id" = $1
 RETURNING *;

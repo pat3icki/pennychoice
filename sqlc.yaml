@@ -26,11 +26,11 @@ sql:
           
           # Maps numeric/decimal to pgtype (preserves precision for finance)
           - db_type: "numeric"
-            go_type: "github.com/jackc/pgx/v4/pgtype.Numeric"
+            go_type: "github.com/jackc/pgx/v5/pgtype.Numeric"
             
           # Maps jsonb to generic bytes or you can map to a specific struct
           - db_type: "jsonb"
-            go_type: "github.com/jackc/pgx/v4/pgtype.JSON"
+            go_type: "github.com/jackc/pgx/v5/pgtype.JSON"
             
           - db_type: "jsonb"
-            go_type: "github.com/jackc/pgx/v4/pgtype.JSON"
+            go_type: "github.com/jackc/pgx/v5/pgtype.JSON"

@@ -20,11 +20,17 @@ type Querier interface {
 	// Login by Email with Password
 	GetUserByEmailN(ctx context.Context, email string) (GetUserByEmailNRow, error)
 	GetUserByPhoneN(ctx context.Context, phone pgtype.Text) (GetUserByPhoneNRow, error)
+	GetUserHashes(ctx context.Context, arg GetUserHashesParams) (GetUserHashesRow, error)
+	GetUserHashesByEmail(ctx context.Context, email string) (GetUserHashesByEmailRow, error)
+	GetUserHashesByID(ctx context.Context, id uuid.UUID) (GetUserHashesByIDRow, error)
+	GetUserHashesByPhone(ctx context.Context, phone pgtype.Text) (GetUserHashesByPhoneRow, error)
 	GetUserStatusByEmail(ctx context.Context, email string) (GetUserStatusByEmailRow, error)
 	GetUserStatusByPhone(ctx context.Context, phone pgtype.Text) (GetUserStatusByPhoneRow, error)
-	GetUserVerification(ctx context.Context, id uuid.UUID) (GetUserVerificationRow, error)
+	GetUserVerificationByEmail(ctx context.Context, email string) (GetUserVerificationByEmailRow, error)
+	GetUserVerificationByID(ctx context.Context, id uuid.UUID) (GetUserVerificationByIDRow, error)
+	GetUserVerificationByPhone(ctx context.Context, phone pgtype.Text) (GetUserVerificationByPhoneRow, error)
 	UpdateUserNIN(ctx context.Context, arg UpdateUserNINParams) (UpdateUserNINRow, error)
-	UpdateUserVerification(ctx context.Context, arg UpdateUserVerificationParams) (UpdateUserVerificationRow, error)
+	UpdateUserVerification(ctx context.Context, arg UpdateUserVerificationParams) (uuid.UUID, error)
 }
 
 var _ Querier = (*Queries)(nil)

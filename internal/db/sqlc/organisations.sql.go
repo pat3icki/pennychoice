@@ -17,21 +17,21 @@ INSERT INTO "accounts"."organisations" (
     "id", 
     "name", 
     "description", 
-    "creator_user", 
+    "creator_user_id", 
     "max_co_organisers", 
-    "max_active_events"
+    "max_active_campaign"
     )
 VALUES ($1, $2, $3, $4, $5, $6)
-RETURNING id, name, description, creator_user, max_co_organisers, max_active_events, total_members, total_events, active_events, created_at, permissions
+RETURNING id, name, description, creator_user_id, max_co_organisers, max_active_campaign, total_members, total_events, active_events, created_at, total_contributions, permissions
 `
 
 type CreateOrganisationParams struct {
-	ID              uuid.UUID   `db:"id" json:"id"`
-	Name            pgtype.Text `db:"name" json:"name"`
-	Description     pgtype.Text `db:"description" json:"description"`
-	CreatorUser     uuid.UUID   `db:"creator_user" json:"creator_user"`
-	MaxCoOrganisers pgtype.Int2 `db:"max_co_organisers" json:"max_co_organisers"`
-	MaxActiveEvents pgtype.Int2 `db:"max_active_events" json:"max_active_events"`
+	ID                uuid.UUID   `db:"id" json:"id"`
+	Name              string      `db:"name" json:"name"`
+	Description       pgtype.Text `db:"description" json:"description"`
+	CreatorUserID     uuid.UUID   `db:"creator_user_id" json:"creator_user_id"`
+	MaxCoOrganisers   int16       `db:"max_co_organisers" json:"max_co_organisers"`
+	MaxActiveCampaign int16       `db:"max_active_campaign" json:"max_active_campaign"`
 }
 
 // Insert into organisations
@@ -40,22 +40,23 @@ func (q *Queries) CreateOrganisation(ctx context.Context, arg CreateOrganisation
 		arg.ID,
 		arg.Name,
 		arg.Description,
-		arg.CreatorUser,
+		arg.CreatorUserID,
 		arg.MaxCoOrganisers,
-		arg.MaxActiveEvents,
+		arg.MaxActiveCampaign,
 	)
 	var i AccountsOrganisation
 	err := row.Scan(
 		&i.ID,
 		&i.Name,
 		&i.Description,
-		&i.CreatorUser,
+		&i.CreatorUserID,
 		&i.MaxCoOrganisers,
-		&i.MaxActiveEvents,
+		&i.MaxActiveCampaign,
 		&i.TotalMembers,
 		&i.TotalEvents,
 		&i.ActiveEvents,
 		&i.CreatedAt,
+		&i.TotalContributions,
 		&i.Permissions,
 	)
 	return i, err

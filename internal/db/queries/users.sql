@@ -22,6 +22,56 @@ INSERT INTO accounts.users (
 RETURNING *;
 
 
+-- name: GetUserHashes :one
+SELECT
+    "id",
+    "status",
+    "hash_type",
+    "hash_password",
+    "hash_pin",
+    "hash_table_seq"
+FROM "accounts"."users"
+WHERE 
+    "phone" = $1
+    OR "email" = $2
+    OR "id" = $3
+LIMIT 1;
+
+-- name: GetUserHashesByEmail :one
+SELECT
+    "id",
+    "status",
+    "hash_type",
+    "hash_password",
+    "hash_pin",
+    "hash_table_seq"
+FROM "accounts"."users" 
+WHERE "email" = $1;
+
+-- name: GetUserHashesByID :one
+SELECT
+    "id",
+    "status",
+    "hash_type",
+    "hash_password",
+    "hash_pin",
+    "hash_table_seq"
+FROM "accounts"."users" 
+WHERE "id" = $1;
+
+-- name: GetUserHashesByPhone :one
+SELECT
+    "id",
+    "status",
+    "hash_type",
+    "hash_password",
+    "hash_pin",
+    "hash_table_seq"
+FROM "accounts"."users" 
+WHERE "phone" = $1;
+
+
+
 -- name: GetUserStatusByEmail :one
 SELECT
  "id",
@@ -78,6 +128,8 @@ WHERE email = $1;
 
 
 
+
+
 -- name: GetUserByPhoneN :one
 SELECT 
     "id",
@@ -106,21 +158,44 @@ SET
     "is_nin_verified" = $4
 WHERE 
     "id" = $1
-RETURNING 
-    "is_phone_verified", 
-    "is_email_verified",
-    "is_nin_verified";
+RETURNING "id";
 
 
--- name: GetUserVerification :one
+-- name: GetUserVerificationByID :one
 SELECT 
+    "id",
+    "status",
     "is_phone_verified",
     "is_email_verified", 
     "is_nin_verified" 
 FROM "accounts"."users"
 WHERE 
-"id" = $1 AND 
-"status" = 'active';
+"id" = $1 
+LIMIT 1;
+
+-- name: GetUserVerificationByEmail :one
+SELECT 
+    "id",
+    "status",
+    "is_phone_verified",
+    "is_email_verified", 
+    "is_nin_verified" 
+FROM "accounts"."users"
+WHERE 
+"email" = $1 
+LIMIT 1;
+
+-- name: GetUserVerificationByPhone :one
+SELECT 
+    "id",
+    "status",
+    "is_phone_verified",
+    "is_email_verified", 
+    "is_nin_verified" 
+FROM "accounts"."users"
+WHERE 
+"phone" = $1 
+LIMIT 1;
 
 
 -- name: UpdateUserNIN :one
