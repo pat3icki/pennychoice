@@ -13,7 +13,7 @@ sql:
         sql_package: "pgx/v5"
         
         # helpful generation settings
-        emit_json_tags: true
+        # emit_json_tags: true
         emit_db_tags: true
         emit_interface: true      # Generates a Querier interface (great for mocking/testing)
         emit_empty_slices: true   # Returns []T{} instead of nil for empty results

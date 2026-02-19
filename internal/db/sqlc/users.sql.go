@@ -33,24 +33,24 @@ INSERT INTO accounts.users (
     $6, $7, $8, $9, $10,
     $11, $12, $13, $14
 )
-RETURNING id, first_name, middle_name, last_name, date_of_birth, gender, status, email, phone, is_whatsapp_phone, is_phone_verified, is_email_verified, is_nin_verified, hash_type, hash_password, hash_pin, hash_table_seq, encrypted_nin, expected_to_delete, created_at
+RETURNING id, first_name, middle_name, last_name, date_of_birth, gender, status, email, phone, country, is_whatsapp_phone, is_phone_verified, is_email_verified, is_nin_verified, hash_type, hash_password, hash_pin, hash_table_seq, encrypted_nin, expected_to_delete, created_at
 `
 
 type CreateUserParams struct {
-	ID              uuid.UUID   `db:"id" json:"id"`
-	FirstName       string      `db:"first_name" json:"first_name"`
-	MiddleName      pgtype.Text `db:"middle_name" json:"middle_name"`
-	LastName        string      `db:"last_name" json:"last_name"`
-	DateOfBirth     pgtype.Date `db:"date_of_birth" json:"date_of_birth"`
-	Gender          pgtype.Text `db:"gender" json:"gender"`
-	Email           string      `db:"email" json:"email"`
-	Phone           pgtype.Text `db:"phone" json:"phone"`
-	IsWhatsappPhone pgtype.Bool `db:"is_whatsapp_phone" json:"is_whatsapp_phone"`
-	Status          string      `db:"status" json:"status"`
-	HashType        string      `db:"hash_type" json:"hash_type"`
-	HashPassword    string      `db:"hash_password" json:"hash_password"`
-	HashPin         string      `db:"hash_pin" json:"hash_pin"`
-	HashTableSeq    pgtype.Int2 `db:"hash_table_seq" json:"hash_table_seq"`
+	ID              uuid.UUID   `db:"id"`
+	FirstName       string      `db:"first_name"`
+	MiddleName      pgtype.Text `db:"middle_name"`
+	LastName        string      `db:"last_name"`
+	DateOfBirth     pgtype.Date `db:"date_of_birth"`
+	Gender          pgtype.Text `db:"gender"`
+	Email           string      `db:"email"`
+	Phone           pgtype.Text `db:"phone"`
+	IsWhatsappPhone pgtype.Bool `db:"is_whatsapp_phone"`
+	Status          string      `db:"status"`
+	HashType        string      `db:"hash_type"`
+	HashPassword    string      `db:"hash_password"`
+	HashPin         string      `db:"hash_pin"`
+	HashTableSeq    pgtype.Int2 `db:"hash_table_seq"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (AccountsUser, error) {
@@ -81,6 +81,7 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (Account
 		&i.Status,
 		&i.Email,
 		&i.Phone,
+		&i.Country,
 		&i.IsWhatsappPhone,
 		&i.IsPhoneVerified,
 		&i.IsEmailVerified,
@@ -113,16 +114,16 @@ WHERE email = $1
 `
 
 type GetUserByEmailRow struct {
-	ID              uuid.UUID   `db:"id" json:"id"`
-	Email           string      `db:"email" json:"email"`
-	HashPassword    string      `db:"hash_password" json:"hash_password"`
-	HashType        string      `db:"hash_type" json:"hash_type"`
-	HashTableSeq    pgtype.Int2 `db:"hash_table_seq" json:"hash_table_seq"`
-	Status          string      `db:"status" json:"status"`
-	FirstName       string      `db:"first_name" json:"first_name"`
-	LastName        string      `db:"last_name" json:"last_name"`
-	IsEmailVerified bool        `db:"is_email_verified" json:"is_email_verified"`
-	IsPhoneVerified bool        `db:"is_phone_verified" json:"is_phone_verified"`
+	ID              uuid.UUID   `db:"id"`
+	Email           string      `db:"email"`
+	HashPassword    string      `db:"hash_password"`
+	HashType        string      `db:"hash_type"`
+	HashTableSeq    pgtype.Int2 `db:"hash_table_seq"`
+	Status          string      `db:"status"`
+	FirstName       string      `db:"first_name"`
+	LastName        string      `db:"last_name"`
+	IsEmailVerified bool        `db:"is_email_verified"`
+	IsPhoneVerified bool        `db:"is_phone_verified"`
 }
 
 // Login by Email with Password
@@ -163,16 +164,16 @@ WHERE "email" = $1
 `
 
 type GetUserByEmailNRow struct {
-	ID              uuid.UUID   `db:"id" json:"id"`
-	Email           string      `db:"email" json:"email"`
-	HashPassword    string      `db:"hash_password" json:"hash_password"`
-	HashType        string      `db:"hash_type" json:"hash_type"`
-	HashTableSeq    pgtype.Int2 `db:"hash_table_seq" json:"hash_table_seq"`
-	Status          string      `db:"status" json:"status"`
-	FirstName       string      `db:"first_name" json:"first_name"`
-	LastName        string      `db:"last_name" json:"last_name"`
-	IsEmailVerified bool        `db:"is_email_verified" json:"is_email_verified"`
-	IsPhoneVerified bool        `db:"is_phone_verified" json:"is_phone_verified"`
+	ID              uuid.UUID   `db:"id"`
+	Email           string      `db:"email"`
+	HashPassword    string      `db:"hash_password"`
+	HashType        string      `db:"hash_type"`
+	HashTableSeq    pgtype.Int2 `db:"hash_table_seq"`
+	Status          string      `db:"status"`
+	FirstName       string      `db:"first_name"`
+	LastName        string      `db:"last_name"`
+	IsEmailVerified bool        `db:"is_email_verified"`
+	IsPhoneVerified bool        `db:"is_phone_verified"`
 }
 
 // Login by Email with Password
@@ -213,16 +214,16 @@ WHERE "phone" = $1
 `
 
 type GetUserByPhoneNRow struct {
-	ID              uuid.UUID   `db:"id" json:"id"`
-	Email           string      `db:"email" json:"email"`
-	HashPassword    string      `db:"hash_password" json:"hash_password"`
-	HashType        string      `db:"hash_type" json:"hash_type"`
-	HashTableSeq    pgtype.Int2 `db:"hash_table_seq" json:"hash_table_seq"`
-	Status          string      `db:"status" json:"status"`
-	FirstName       string      `db:"first_name" json:"first_name"`
-	LastName        string      `db:"last_name" json:"last_name"`
-	IsEmailVerified bool        `db:"is_email_verified" json:"is_email_verified"`
-	IsPhoneVerified bool        `db:"is_phone_verified" json:"is_phone_verified"`
+	ID              uuid.UUID   `db:"id"`
+	Email           string      `db:"email"`
+	HashPassword    string      `db:"hash_password"`
+	HashType        string      `db:"hash_type"`
+	HashTableSeq    pgtype.Int2 `db:"hash_table_seq"`
+	Status          string      `db:"status"`
+	FirstName       string      `db:"first_name"`
+	LastName        string      `db:"last_name"`
+	IsEmailVerified bool        `db:"is_email_verified"`
+	IsPhoneVerified bool        `db:"is_phone_verified"`
 }
 
 func (q *Queries) GetUserByPhoneN(ctx context.Context, phone pgtype.Text) (GetUserByPhoneNRow, error) {
@@ -260,18 +261,18 @@ LIMIT 1
 `
 
 type GetUserHashesParams struct {
-	Phone pgtype.Text `db:"phone" json:"phone"`
-	Email string      `db:"email" json:"email"`
-	ID    uuid.UUID   `db:"id" json:"id"`
+	Phone pgtype.Text `db:"phone"`
+	Email string      `db:"email"`
+	ID    uuid.UUID   `db:"id"`
 }
 
 type GetUserHashesRow struct {
-	ID           uuid.UUID   `db:"id" json:"id"`
-	Status       string      `db:"status" json:"status"`
-	HashType     string      `db:"hash_type" json:"hash_type"`
-	HashPassword string      `db:"hash_password" json:"hash_password"`
-	HashPin      string      `db:"hash_pin" json:"hash_pin"`
-	HashTableSeq pgtype.Int2 `db:"hash_table_seq" json:"hash_table_seq"`
+	ID           uuid.UUID   `db:"id"`
+	Status       string      `db:"status"`
+	HashType     string      `db:"hash_type"`
+	HashPassword string      `db:"hash_password"`
+	HashPin      string      `db:"hash_pin"`
+	HashTableSeq pgtype.Int2 `db:"hash_table_seq"`
 }
 
 func (q *Queries) GetUserHashes(ctx context.Context, arg GetUserHashesParams) (GetUserHashesRow, error) {
@@ -301,12 +302,12 @@ WHERE "email" = $1
 `
 
 type GetUserHashesByEmailRow struct {
-	ID           uuid.UUID   `db:"id" json:"id"`
-	Status       string      `db:"status" json:"status"`
-	HashType     string      `db:"hash_type" json:"hash_type"`
-	HashPassword string      `db:"hash_password" json:"hash_password"`
-	HashPin      string      `db:"hash_pin" json:"hash_pin"`
-	HashTableSeq pgtype.Int2 `db:"hash_table_seq" json:"hash_table_seq"`
+	ID           uuid.UUID   `db:"id"`
+	Status       string      `db:"status"`
+	HashType     string      `db:"hash_type"`
+	HashPassword string      `db:"hash_password"`
+	HashPin      string      `db:"hash_pin"`
+	HashTableSeq pgtype.Int2 `db:"hash_table_seq"`
 }
 
 func (q *Queries) GetUserHashesByEmail(ctx context.Context, email string) (GetUserHashesByEmailRow, error) {
@@ -336,12 +337,12 @@ WHERE "id" = $1
 `
 
 type GetUserHashesByIDRow struct {
-	ID           uuid.UUID   `db:"id" json:"id"`
-	Status       string      `db:"status" json:"status"`
-	HashType     string      `db:"hash_type" json:"hash_type"`
-	HashPassword string      `db:"hash_password" json:"hash_password"`
-	HashPin      string      `db:"hash_pin" json:"hash_pin"`
-	HashTableSeq pgtype.Int2 `db:"hash_table_seq" json:"hash_table_seq"`
+	ID           uuid.UUID   `db:"id"`
+	Status       string      `db:"status"`
+	HashType     string      `db:"hash_type"`
+	HashPassword string      `db:"hash_password"`
+	HashPin      string      `db:"hash_pin"`
+	HashTableSeq pgtype.Int2 `db:"hash_table_seq"`
 }
 
 func (q *Queries) GetUserHashesByID(ctx context.Context, id uuid.UUID) (GetUserHashesByIDRow, error) {
@@ -371,12 +372,12 @@ WHERE "phone" = $1
 `
 
 type GetUserHashesByPhoneRow struct {
-	ID           uuid.UUID   `db:"id" json:"id"`
-	Status       string      `db:"status" json:"status"`
-	HashType     string      `db:"hash_type" json:"hash_type"`
-	HashPassword string      `db:"hash_password" json:"hash_password"`
-	HashPin      string      `db:"hash_pin" json:"hash_pin"`
-	HashTableSeq pgtype.Int2 `db:"hash_table_seq" json:"hash_table_seq"`
+	ID           uuid.UUID   `db:"id"`
+	Status       string      `db:"status"`
+	HashType     string      `db:"hash_type"`
+	HashPassword string      `db:"hash_password"`
+	HashPin      string      `db:"hash_pin"`
+	HashTableSeq pgtype.Int2 `db:"hash_table_seq"`
 }
 
 func (q *Queries) GetUserHashesByPhone(ctx context.Context, phone pgtype.Text) (GetUserHashesByPhoneRow, error) {
@@ -404,10 +405,10 @@ WHERE "email" = $1
 `
 
 type GetUserStatusByEmailRow struct {
-	ID     uuid.UUID   `db:"id" json:"id"`
-	Status string      `db:"status" json:"status"`
-	Phone  pgtype.Text `db:"phone" json:"phone"`
-	Email  string      `db:"email" json:"email"`
+	ID     uuid.UUID   `db:"id"`
+	Status string      `db:"status"`
+	Phone  pgtype.Text `db:"phone"`
+	Email  string      `db:"email"`
 }
 
 func (q *Queries) GetUserStatusByEmail(ctx context.Context, email string) (GetUserStatusByEmailRow, error) {
@@ -433,10 +434,10 @@ WHERE "phone" = $1
 `
 
 type GetUserStatusByPhoneRow struct {
-	ID     uuid.UUID   `db:"id" json:"id"`
-	Status string      `db:"status" json:"status"`
-	Phone  pgtype.Text `db:"phone" json:"phone"`
-	Email  string      `db:"email" json:"email"`
+	ID     uuid.UUID   `db:"id"`
+	Status string      `db:"status"`
+	Phone  pgtype.Text `db:"phone"`
+	Email  string      `db:"email"`
 }
 
 func (q *Queries) GetUserStatusByPhone(ctx context.Context, phone pgtype.Text) (GetUserStatusByPhoneRow, error) {
@@ -465,11 +466,11 @@ LIMIT 1
 `
 
 type GetUserVerificationByEmailRow struct {
-	ID              uuid.UUID `db:"id" json:"id"`
-	Status          string    `db:"status" json:"status"`
-	IsPhoneVerified bool      `db:"is_phone_verified" json:"is_phone_verified"`
-	IsEmailVerified bool      `db:"is_email_verified" json:"is_email_verified"`
-	IsNinVerified   bool      `db:"is_nin_verified" json:"is_nin_verified"`
+	ID              uuid.UUID `db:"id"`
+	Status          string    `db:"status"`
+	IsPhoneVerified bool      `db:"is_phone_verified"`
+	IsEmailVerified bool      `db:"is_email_verified"`
+	IsNinVerified   bool      `db:"is_nin_verified"`
 }
 
 func (q *Queries) GetUserVerificationByEmail(ctx context.Context, email string) (GetUserVerificationByEmailRow, error) {
@@ -499,11 +500,11 @@ LIMIT 1
 `
 
 type GetUserVerificationByIDRow struct {
-	ID              uuid.UUID `db:"id" json:"id"`
-	Status          string    `db:"status" json:"status"`
-	IsPhoneVerified bool      `db:"is_phone_verified" json:"is_phone_verified"`
-	IsEmailVerified bool      `db:"is_email_verified" json:"is_email_verified"`
-	IsNinVerified   bool      `db:"is_nin_verified" json:"is_nin_verified"`
+	ID              uuid.UUID `db:"id"`
+	Status          string    `db:"status"`
+	IsPhoneVerified bool      `db:"is_phone_verified"`
+	IsEmailVerified bool      `db:"is_email_verified"`
+	IsNinVerified   bool      `db:"is_nin_verified"`
 }
 
 func (q *Queries) GetUserVerificationByID(ctx context.Context, id uuid.UUID) (GetUserVerificationByIDRow, error) {
@@ -533,11 +534,11 @@ LIMIT 1
 `
 
 type GetUserVerificationByPhoneRow struct {
-	ID              uuid.UUID `db:"id" json:"id"`
-	Status          string    `db:"status" json:"status"`
-	IsPhoneVerified bool      `db:"is_phone_verified" json:"is_phone_verified"`
-	IsEmailVerified bool      `db:"is_email_verified" json:"is_email_verified"`
-	IsNinVerified   bool      `db:"is_nin_verified" json:"is_nin_verified"`
+	ID              uuid.UUID `db:"id"`
+	Status          string    `db:"status"`
+	IsPhoneVerified bool      `db:"is_phone_verified"`
+	IsEmailVerified bool      `db:"is_email_verified"`
+	IsNinVerified   bool      `db:"is_nin_verified"`
 }
 
 func (q *Queries) GetUserVerificationByPhone(ctx context.Context, phone pgtype.Text) (GetUserVerificationByPhoneRow, error) {
@@ -568,15 +569,15 @@ RETURNING
 `
 
 type UpdateUserNINParams struct {
-	ID           uuid.UUID   `db:"id" json:"id"`
-	EncryptedNin pgtype.Text `db:"encrypted_nin" json:"encrypted_nin"`
+	ID           uuid.UUID   `db:"id"`
+	EncryptedNin pgtype.Text `db:"encrypted_nin"`
 }
 
 type UpdateUserNINRow struct {
-	ID            uuid.UUID   `db:"id" json:"id"`
-	IsNinVerified bool        `db:"is_nin_verified" json:"is_nin_verified"`
-	HashPin       string      `db:"hash_pin" json:"hash_pin"`
-	EncryptedNin  pgtype.Text `db:"encrypted_nin" json:"encrypted_nin"`
+	ID            uuid.UUID   `db:"id"`
+	IsNinVerified bool        `db:"is_nin_verified"`
+	HashPin       string      `db:"hash_pin"`
+	EncryptedNin  pgtype.Text `db:"encrypted_nin"`
 }
 
 func (q *Queries) UpdateUserNIN(ctx context.Context, arg UpdateUserNINParams) (UpdateUserNINRow, error) {
@@ -603,10 +604,10 @@ RETURNING "id"
 `
 
 type UpdateUserVerificationParams struct {
-	ID              uuid.UUID `db:"id" json:"id"`
-	IsPhoneVerified bool      `db:"is_phone_verified" json:"is_phone_verified"`
-	IsEmailVerified bool      `db:"is_email_verified" json:"is_email_verified"`
-	IsNinVerified   bool      `db:"is_nin_verified" json:"is_nin_verified"`
+	ID              uuid.UUID `db:"id"`
+	IsPhoneVerified bool      `db:"is_phone_verified"`
+	IsEmailVerified bool      `db:"is_email_verified"`
+	IsNinVerified   bool      `db:"is_nin_verified"`
 }
 
 func (q *Queries) UpdateUserVerification(ctx context.Context, arg UpdateUserVerificationParams) (uuid.UUID, error) {

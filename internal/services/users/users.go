@@ -4,14 +4,12 @@ import (
 	"context"
 	"time"
 
-	"github.com/google/uuid"
-
-	// "github.com/pat3icki/pennychoice/internal/states"
-
 	"github.com/pat3icki/pennychoice/types"
 )
 
 func (s *Service) CreateUser(ctx context.Context, usr *CreateUserParams) (*CreateUserResult, error) {
+	s.mu.Lock()
+
 	return nil, nil
 }
 
@@ -24,8 +22,6 @@ func (s *Service) GetUserProfile(ctx context.Context, usr types.User) (*UserProf
 func (s *Service) DeactiviateUser(ctx context.Context, usr types.User, expected_pin string, period time.Time) {
 
 }
-
-func (s *Service) SuspendUser(ctx context.Context, usr_id uuid.UUID)
 
 // func (s *Service) Login(ctx context.Context, req_key int64, params LoginParams) (usr User, err error) {
 // 	id_info := sflake.Describe(req_key, sflake.DefaultEpoch)

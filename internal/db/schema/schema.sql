@@ -15,6 +15,7 @@ CREATE TABLE "accounts"."users" (
   "status" VARCHAR(12) NOT NULL CHECK (status IN ('active', 'deactivited', 'suspended')) DEFAULT 'active', 
   "email" VARCHAR(255)  NOT NULL,
   "phone" VARCHAR(20),
+  "country" VARCHAR(55) NOT NULL,
   "is_whatsapp_phone" BOOLEAN DEFAULT FALSE,
   
   -- Verification

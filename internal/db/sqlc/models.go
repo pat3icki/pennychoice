@@ -10,154 +10,155 @@ import (
 )
 
 type AccountsCampaign struct {
-	ID                    uuid.UUID        `db:"id" json:"id"`
-	OrganisationID        pgtype.UUID      `db:"organisation_id" json:"organisation_id"`
-	Name                  pgtype.Text      `db:"name" json:"name"`
-	Description           pgtype.Text      `db:"description" json:"description"`
-	Status                pgtype.Text      `db:"status" json:"status"`
-	BankNameSuffix        pgtype.Text      `db:"bank_name_suffix" json:"bank_name_suffix"`
-	Tags                  pgtype.Text      `db:"tags" json:"tags"`
-	AmountRaised          pgtype.Int8      `db:"amount_raised" json:"amount_raised"`
-	TotalVotes            pgtype.Float8    `db:"total_votes" json:"total_votes"`
-	TotalContestants      pgtype.Int2      `db:"total_contestants" json:"total_contestants"`
-	VoteCurrency          pgtype.Text      `db:"vote_currency" json:"vote_currency"`
-	VotePerOneAmount      pgtype.Int4      `db:"vote_per_one_amount" json:"vote_per_one_amount"`
-	VoteMetricsVisibility pgtype.Text      `db:"vote_metrics_visibility" json:"vote_metrics_visibility"`
-	AllowRefunds          pgtype.Bool      `db:"allow_refunds" json:"allow_refunds"`
-	VedictPartialVote     pgtype.Bool      `db:"vedict_partial_vote" json:"vedict_partial_vote"`
-	PlatformFeePercentage pgtype.Numeric   `db:"platform_fee_percentage" json:"platform_fee_percentage"`
-	VotesStartsAt         pgtype.Timestamp `db:"votes_starts_at" json:"votes_starts_at"`
-	VotesEndsAt           pgtype.Timestamp `db:"votes_ends_at" json:"votes_ends_at"`
-	CreatorUserID         pgtype.UUID      `db:"creator_user_id" json:"creator_user_id"`
-	CreateAt              pgtype.Timestamp `db:"create_at" json:"create_at"`
+	ID                    uuid.UUID        `db:"id"`
+	OrganisationID        pgtype.UUID      `db:"organisation_id"`
+	Name                  pgtype.Text      `db:"name"`
+	Description           pgtype.Text      `db:"description"`
+	Status                pgtype.Text      `db:"status"`
+	BankNameSuffix        pgtype.Text      `db:"bank_name_suffix"`
+	Tags                  pgtype.Text      `db:"tags"`
+	AmountRaised          pgtype.Int8      `db:"amount_raised"`
+	TotalVotes            pgtype.Float8    `db:"total_votes"`
+	TotalContestants      pgtype.Int2      `db:"total_contestants"`
+	VoteCurrency          pgtype.Text      `db:"vote_currency"`
+	VotePerOneAmount      pgtype.Int4      `db:"vote_per_one_amount"`
+	VoteMetricsVisibility pgtype.Text      `db:"vote_metrics_visibility"`
+	AllowRefunds          pgtype.Bool      `db:"allow_refunds"`
+	VedictPartialVote     pgtype.Bool      `db:"vedict_partial_vote"`
+	PlatformFeePercentage pgtype.Numeric   `db:"platform_fee_percentage"`
+	VotesStartsAt         pgtype.Timestamp `db:"votes_starts_at"`
+	VotesEndsAt           pgtype.Timestamp `db:"votes_ends_at"`
+	CreatorUserID         pgtype.UUID      `db:"creator_user_id"`
+	CreateAt              pgtype.Timestamp `db:"create_at"`
 }
 
 type AccountsContestant struct {
-	ID                 uuid.UUID     `db:"id" json:"id"`
-	CampaignID         pgtype.UUID   `db:"campaign_id" json:"campaign_id"`
-	UserID             pgtype.UUID   `db:"user_id" json:"user_id"`
-	DisplayName        pgtype.Text   `db:"display_name" json:"display_name"`
-	PhotoRoot          pgtype.Text   `db:"photo_root" json:"photo_root"`
-	SocialLinks        []byte        `db:"social_links" json:"social_links"`
-	OrganisationName   pgtype.Text   `db:"organisation_name" json:"organisation_name"`
-	NubanAccountNumber pgtype.Text   `db:"nuban_account_number" json:"nuban_account_number"`
-	NubanAccountName   pgtype.Text   `db:"nuban_account_name" json:"nuban_account_name"`
-	NubanBankCode      pgtype.Text   `db:"nuban_bank_code" json:"nuban_bank_code"`
-	NubanHash          pgtype.Text   `db:"nuban_hash" json:"nuban_hash"`
-	IsNubanEnabled     pgtype.Bool   `db:"is_nuban_enabled" json:"is_nuban_enabled"`
-	VoteCount          pgtype.Float8 `db:"vote_count" json:"vote_count"`
-	HvPerTransact      pgtype.Float8 `db:"hv_per_transact" json:"hv_per_transact"`
+	ID                 uuid.UUID     `db:"id"`
+	CampaignID         pgtype.UUID   `db:"campaign_id"`
+	UserID             pgtype.UUID   `db:"user_id"`
+	DisplayName        pgtype.Text   `db:"display_name"`
+	PhotoRoot          pgtype.Text   `db:"photo_root"`
+	SocialLinks        []byte        `db:"social_links"`
+	OrganisationName   pgtype.Text   `db:"organisation_name"`
+	NubanAccountNumber pgtype.Text   `db:"nuban_account_number"`
+	NubanAccountName   pgtype.Text   `db:"nuban_account_name"`
+	NubanBankCode      pgtype.Text   `db:"nuban_bank_code"`
+	NubanHash          pgtype.Text   `db:"nuban_hash"`
+	IsNubanEnabled     pgtype.Bool   `db:"is_nuban_enabled"`
+	VoteCount          pgtype.Float8 `db:"vote_count"`
+	HvPerTransact      pgtype.Float8 `db:"hv_per_transact"`
 }
 
 type AccountsNotification struct {
-	MsgID          int64            `db:"msg_id" json:"msg_id"`
-	UserID         uuid.UUID        `db:"user_id" json:"user_id"`
-	Title          string           `db:"title" json:"title"`
-	Description    string           `db:"description" json:"description"`
-	Status         pgtype.Text      `db:"status" json:"status"`
-	CreatedAt      pgtype.Timestamp `db:"created_at" json:"created_at"`
-	Source         string           `db:"source" json:"source"`
-	SourceTargetID pgtype.Text      `db:"source_target_id" json:"source_target_id"`
-	ReadAt         pgtype.Timestamp `db:"read_at" json:"read_at"`
+	MsgID          int64            `db:"msg_id"`
+	UserID         uuid.UUID        `db:"user_id"`
+	Title          string           `db:"title"`
+	Description    string           `db:"description"`
+	Status         pgtype.Text      `db:"status"`
+	CreatedAt      pgtype.Timestamp `db:"created_at"`
+	Source         string           `db:"source"`
+	SourceTargetID pgtype.Text      `db:"source_target_id"`
+	ReadAt         pgtype.Timestamp `db:"read_at"`
 }
 
 type AccountsOrganisation struct {
-	ID                 uuid.UUID        `db:"id" json:"id"`
-	Name               string           `db:"name" json:"name"`
-	Description        pgtype.Text      `db:"description" json:"description"`
-	CreatorUserID      uuid.UUID        `db:"creator_user_id" json:"creator_user_id"`
-	MaxCoOrganisers    int16            `db:"max_co_organisers" json:"max_co_organisers"`
-	MaxActiveCampaign  int16            `db:"max_active_campaign" json:"max_active_campaign"`
-	TotalMembers       int16            `db:"total_members" json:"total_members"`
-	TotalEvents        int16            `db:"total_events" json:"total_events"`
-	ActiveEvents       pgtype.Int2      `db:"active_events" json:"active_events"`
-	CreatedAt          pgtype.Timestamp `db:"created_at" json:"created_at"`
-	TotalContributions int64            `db:"total_contributions" json:"total_contributions"`
-	Permissions        []byte           `db:"permissions" json:"permissions"`
+	ID                 uuid.UUID        `db:"id"`
+	Name               string           `db:"name"`
+	Description        pgtype.Text      `db:"description"`
+	CreatorUserID      uuid.UUID        `db:"creator_user_id"`
+	MaxCoOrganisers    int16            `db:"max_co_organisers"`
+	MaxActiveCampaign  int16            `db:"max_active_campaign"`
+	TotalMembers       int16            `db:"total_members"`
+	TotalEvents        int16            `db:"total_events"`
+	ActiveEvents       pgtype.Int2      `db:"active_events"`
+	CreatedAt          pgtype.Timestamp `db:"created_at"`
+	TotalContributions int64            `db:"total_contributions"`
+	Permissions        []byte           `db:"permissions"`
 }
 
 type AccountsOrganisationDecison struct {
-	ID             uuid.UUID        `db:"id" json:"id"`
-	CampaignID     pgtype.UUID      `db:"campaign_id" json:"campaign_id"`
-	ActionType     pgtype.Text      `db:"action_type" json:"action_type"`
-	EventID        pgtype.UUID      `db:"event_id" json:"event_id"`
-	OrganisationID uuid.UUID        `db:"organisation_id" json:"organisation_id"`
-	Message        string           `db:"message" json:"message"`
-	Status         string           `db:"status" json:"status"`
-	InitatorID     uuid.UUID        `db:"initator_id" json:"initator_id"`
-	Deadline       pgtype.Timestamp `db:"deadline" json:"deadline"`
-	CreatedAt      pgtype.Timestamp `db:"created_at" json:"created_at"`
+	ID             uuid.UUID        `db:"id"`
+	CampaignID     pgtype.UUID      `db:"campaign_id"`
+	ActionType     pgtype.Text      `db:"action_type"`
+	CampaignID     pgtype.UUID      `db:"campaign_id"`
+	OrganisationID uuid.UUID        `db:"organisation_id"`
+	Message        string           `db:"message"`
+	Status         string           `db:"status"`
+	InitatorID     uuid.UUID        `db:"initator_id"`
+	Deadline       pgtype.Timestamp `db:"deadline"`
+	CreatedAt      pgtype.Timestamp `db:"created_at"`
 }
 
 type AccountsOrganisationsMember struct {
-	OrgID     uuid.UUID        `db:"org_id" json:"org_id"`
-	MemberID  uuid.UUID        `db:"member_id" json:"member_id"`
-	Position  pgtype.Int4      `db:"position" json:"position"`
-	InvitedBy pgtype.UUID      `db:"invited_by" json:"invited_by"`
-	JoinedAt  pgtype.Timestamp `db:"joined_at" json:"joined_at"`
+	OrgID     uuid.UUID        `db:"org_id"`
+	MemberID  uuid.UUID        `db:"member_id"`
+	Position  pgtype.Int4      `db:"position"`
+	InvitedBy pgtype.UUID      `db:"invited_by"`
+	JoinedAt  pgtype.Timestamp `db:"joined_at"`
 }
 
 type AccountsRequestOrganisationMember struct {
-	RequestID        int32            `db:"request_id" json:"request_id"`
-	RecipientUserID  pgtype.UUID      `db:"recipient_user_id" json:"recipient_user_id"`
-	FromUserID       uuid.UUID        `db:"from_user_id" json:"from_user_id"`
-	FromUserName     string           `db:"from_user_name" json:"from_user_name"`
-	OrgID            uuid.UUID        `db:"org_id" json:"org_id"`
-	OrgName          string           `db:"org_name" json:"org_name"`
-	Verdict          pgtype.Text      `db:"verdict" json:"verdict"`
-	VerdictTimestamp pgtype.Timestamp `db:"verdict_timestamp" json:"verdict_timestamp"`
-	InvitedTimestamp pgtype.Timestamp `db:"invited_timestamp" json:"invited_timestamp"`
+	RequestID        int32            `db:"request_id"`
+	RecipientUserID  pgtype.UUID      `db:"recipient_user_id"`
+	FromUserID       uuid.UUID        `db:"from_user_id"`
+	FromUserName     string           `db:"from_user_name"`
+	OrgID            uuid.UUID        `db:"org_id"`
+	OrgName          string           `db:"org_name"`
+	Verdict          pgtype.Text      `db:"verdict"`
+	VerdictTimestamp pgtype.Timestamp `db:"verdict_timestamp"`
+	InvitedTimestamp pgtype.Timestamp `db:"invited_timestamp"`
 }
 
 type AccountsUser struct {
-	ID               uuid.UUID        `db:"id" json:"id"`
-	FirstName        string           `db:"first_name" json:"first_name"`
-	MiddleName       pgtype.Text      `db:"middle_name" json:"middle_name"`
-	LastName         string           `db:"last_name" json:"last_name"`
-	DateOfBirth      pgtype.Date      `db:"date_of_birth" json:"date_of_birth"`
-	Gender           pgtype.Text      `db:"gender" json:"gender"`
-	Status           string           `db:"status" json:"status"`
-	Email            string           `db:"email" json:"email"`
-	Phone            pgtype.Text      `db:"phone" json:"phone"`
-	IsWhatsappPhone  pgtype.Bool      `db:"is_whatsapp_phone" json:"is_whatsapp_phone"`
-	IsPhoneVerified  bool             `db:"is_phone_verified" json:"is_phone_verified"`
-	IsEmailVerified  bool             `db:"is_email_verified" json:"is_email_verified"`
-	IsNinVerified    bool             `db:"is_nin_verified" json:"is_nin_verified"`
-	HashType         string           `db:"hash_type" json:"hash_type"`
-	HashPassword     string           `db:"hash_password" json:"hash_password"`
-	HashPin          string           `db:"hash_pin" json:"hash_pin"`
-	HashTableSeq     pgtype.Int2      `db:"hash_table_seq" json:"hash_table_seq"`
-	EncryptedNin     pgtype.Text      `db:"encrypted_nin" json:"encrypted_nin"`
-	ExpectedToDelete pgtype.Timestamp `db:"expected_to_delete" json:"expected_to_delete"`
-	CreatedAt        pgtype.Timestamp `db:"created_at" json:"created_at"`
+	ID               uuid.UUID        `db:"id"`
+	FirstName        string           `db:"first_name"`
+	MiddleName       pgtype.Text      `db:"middle_name"`
+	LastName         string           `db:"last_name"`
+	DateOfBirth      pgtype.Date      `db:"date_of_birth"`
+	Gender           pgtype.Text      `db:"gender"`
+	Status           string           `db:"status"`
+	Email            string           `db:"email"`
+	Phone            pgtype.Text      `db:"phone"`
+	Country          string           `db:"country"`
+	IsWhatsappPhone  pgtype.Bool      `db:"is_whatsapp_phone"`
+	IsPhoneVerified  bool             `db:"is_phone_verified"`
+	IsEmailVerified  bool             `db:"is_email_verified"`
+	IsNinVerified    bool             `db:"is_nin_verified"`
+	HashType         string           `db:"hash_type"`
+	HashPassword     string           `db:"hash_password"`
+	HashPin          string           `db:"hash_pin"`
+	HashTableSeq     pgtype.Int2      `db:"hash_table_seq"`
+	EncryptedNin     pgtype.Text      `db:"encrypted_nin"`
+	ExpectedToDelete pgtype.Timestamp `db:"expected_to_delete"`
+	CreatedAt        pgtype.Timestamp `db:"created_at"`
 }
 
 type FinanceTransaction struct {
-	ID                       int64            `db:"id" json:"id"`
-	EventID                  uuid.UUID        `db:"event_id" json:"event_id"`
-	TransactionRefernce      string           `db:"transaction_refernce" json:"transaction_refernce"`
-	PaymentMethod            string           `db:"payment_method" json:"payment_method"`
-	PaymentServiceProvider   string           `db:"payment_service_provider" json:"payment_service_provider"`
-	NubanDestAccountNum      pgtype.Text      `db:"nuban_dest_account_num" json:"nuban_dest_account_num"`
-	NubanDestBankCode        pgtype.Text      `db:"nuban_dest_bank_code" json:"nuban_dest_bank_code"`
-	NubanSourceAccountNumber pgtype.Text      `db:"nuban_source_account_number" json:"nuban_source_account_number"`
-	NubanSourceBankCode      pgtype.Text      `db:"nuban_source_bank_code" json:"nuban_source_bank_code"`
-	PspMetadata              []byte           `db:"psp_metadata" json:"psp_metadata"`
-	Status                   string           `db:"status" json:"status"`
-	EventBalanceBefore       int32            `db:"event_balance_before" json:"event_balance_before"`
-	EventBalanceAfter        int32            `db:"event_balance_after" json:"event_balance_after"`
-	Amount                   int64            `db:"amount" json:"amount"`
-	Currency                 string           `db:"currency" json:"currency"`
-	EntryType                string           `db:"entry_type" json:"entry_type"`
-	Purpose                  string           `db:"purpose" json:"purpose"`
-	PaidAt                   pgtype.Timestamp `db:"paid_at" json:"paid_at"`
-	CreatedAt                pgtype.Timestamp `db:"created_at" json:"created_at"`
+	ID                       int64            `db:"id"`
+	EventID                  uuid.UUID        `db:"event_id"`
+	TransactionRefernce      string           `db:"transaction_refernce"`
+	PaymentMethod            string           `db:"payment_method"`
+	PaymentServiceProvider   string           `db:"payment_service_provider"`
+	NubanDestAccountNum      pgtype.Text      `db:"nuban_dest_account_num"`
+	NubanDestBankCode        pgtype.Text      `db:"nuban_dest_bank_code"`
+	NubanSourceAccountNumber pgtype.Text      `db:"nuban_source_account_number"`
+	NubanSourceBankCode      pgtype.Text      `db:"nuban_source_bank_code"`
+	PspMetadata              []byte           `db:"psp_metadata"`
+	Status                   string           `db:"status"`
+	EventBalanceBefore       int32            `db:"event_balance_before"`
+	EventBalanceAfter        int32            `db:"event_balance_after"`
+	Amount                   int64            `db:"amount"`
+	Currency                 string           `db:"currency"`
+	EntryType                string           `db:"entry_type"`
+	Purpose                  string           `db:"purpose"`
+	PaidAt                   pgtype.Timestamp `db:"paid_at"`
+	CreatedAt                pgtype.Timestamp `db:"created_at"`
 }
 
 type TimescaledbCampaignMetric struct {
-	Time       pgtype.Timestamp `db:"time" json:"time"`
-	UserID     pgtype.UUID      `db:"user_id" json:"user_id"`
-	CampaignID pgtype.UUID      `db:"campaign_id" json:"campaign_id"`
-	Vote       pgtype.Float8    `db:"vote" json:"vote"`
-	Amount     pgtype.Int8      `db:"amount" json:"amount"`
+	Time       pgtype.Timestamp `db:"time"`
+	UserID     pgtype.UUID      `db:"user_id"`
+	CampaignID pgtype.UUID      `db:"campaign_id"`
+	Vote       pgtype.Float8    `db:"vote"`
+	Amount     pgtype.Int8      `db:"amount"`
 }

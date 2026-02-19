@@ -26,12 +26,12 @@ RETURNING id, name, description, creator_user_id, max_co_organisers, max_active_
 `
 
 type CreateOrganisationParams struct {
-	ID                uuid.UUID   `db:"id" json:"id"`
-	Name              string      `db:"name" json:"name"`
-	Description       pgtype.Text `db:"description" json:"description"`
-	CreatorUserID     uuid.UUID   `db:"creator_user_id" json:"creator_user_id"`
-	MaxCoOrganisers   int16       `db:"max_co_organisers" json:"max_co_organisers"`
-	MaxActiveCampaign int16       `db:"max_active_campaign" json:"max_active_campaign"`
+	ID                uuid.UUID   `db:"id"`
+	Name              string      `db:"name"`
+	Description       pgtype.Text `db:"description"`
+	CreatorUserID     uuid.UUID   `db:"creator_user_id"`
+	MaxCoOrganisers   int16       `db:"max_co_organisers"`
+	MaxActiveCampaign int16       `db:"max_active_campaign"`
 }
 
 // Insert into organisations

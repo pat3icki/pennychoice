@@ -67,7 +67,7 @@ func (s *Service) _validatePasswordOrPIN(ctx context.Context, usr types.User, va
 		}
 		ret = ValidateUser{
 			ID:     userHashes.ID,
-			Status: userHashes.Status,
+			Status: UserStatus(UserStatus(userHashes.Status)),
 			User:   usr,
 		}
 		return ret, nil
@@ -85,7 +85,7 @@ func (s *Service) _validatePasswordOrPIN(ctx context.Context, usr types.User, va
 		}
 		ret = ValidateUser{
 			ID:     userHashes.ID,
-			Status: userHashes.Status,
+			Status: UserStatus(userHashes.Status),
 			User:   usr,
 		}
 		return ret, nil
@@ -102,7 +102,7 @@ func (s *Service) _validatePasswordOrPIN(ctx context.Context, usr types.User, va
 		}
 		ret = ValidateUser{
 			ID:     userHashes.ID,
-			Status: userHashes.Status,
+			Status: UserStatus(userHashes.Status),
 			User:   usr,
 		}
 		return ret, nil
@@ -112,10 +112,10 @@ func (s *Service) _validatePasswordOrPIN(ctx context.Context, usr types.User, va
 	}
 }
 
-func (s *Service) _userHashes(ctx context.Context, usr types.User) (GetUserHashes, error) {
+func (s *Service) _userHashes(ctx context.Context, usr types.User) (UserHashes, error) {
 	var (
 		db_anyIdentifier sqlc.GetUserHashesRow
-		ret              GetUserHashes
+		ret              UserHashes
 		err              error
 	)
 
@@ -145,18 +145,18 @@ func (s *Service) _userHashes(ctx context.Context, usr types.User) (GetUserHashe
 				ID:    uuid.Nil,
 			})
 		default:
-			return GetUserHashes{}, errors.New("surpported user uniquness are email, id and phone")
+			return UserHashes{}, errors.New("surpported user uniquness are email, id and phone")
 		}
 	} else {
 
 	}
-	ret = GetUserHashes{
+	ret = UserHashes{
 		ID:           db_anyIdentifier.ID,
 		Status:       db_anyIdentifier.Status,
 		HashType:     db_anyIdentifier.HashType,
 		HashPassword: db_anyIdentifier.HashPassword,
 		HashPin:      db_anyIdentifier.HashPin,
-		HashTableSeq: db_anyIdentifier.HashTableSeq,
+		HashTableSeq: uint8(db_anyIdentifier.HashTableSeq.Int16),
 	}
 	return ret, err
 }
