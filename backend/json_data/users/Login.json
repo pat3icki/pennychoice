@@ -1,0 +1,16 @@
+{
+    
+    "header": {
+        "authorization": "string",
+        "server": "frontend",
+        "timestamp": "string"
+    },
+    "data": {
+        "mdoe": "string",
+        "user": "string",
+        "password": "string",
+        "options": {
+            "return_keys": []
+        }
+    }
+}

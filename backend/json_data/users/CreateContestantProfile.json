@@ -1,0 +1,16 @@
+{
+    "header": {
+        "authorization": "string",
+        "server": "frontend",
+        "timestamp": "string"
+    },
+    "request_data": {
+        "user_info": {
+            "authorization": "string"
+        },
+        "data": {
+            "schema": "string",
+            "payload": {}
+        }
+    }
+}

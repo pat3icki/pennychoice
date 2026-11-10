@@ -1,0 +1,30 @@
+[
+    {
+        "command": "update_vote_period_campaign",
+        "request_data": {
+            "client_info": {
+                "token": "string",
+                "organisation": "string",
+                "campaign": "uuid"
+            },
+            "data": {
+                "vote_starts_at": "time.Time",
+                "vote_ends_at": "time.TIME"
+            }
+        }
+
+    },
+    {
+        "command": "create_campaign",
+        "request_data": {
+            "client_info": {
+                "token": "string",
+                "organisation": "string"
+            },
+            "data": {
+                "vote_ends_at": "time.TIME"
+            }
+        }
+
+    }
+]

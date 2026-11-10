@@ -1,0 +1,9 @@
+bin/
+vendor/
+tests/env
+tests/remote_db.env
+
+# IDE
+.vscode/
+.agents/
+

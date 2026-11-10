@@ -1,0 +1,389 @@
+openapi: 3.0.3
+info:
+  title: Pennychoice Backend Internal API
+  description: Internal API connecting directly to frontend server for user and campaign operations.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /users:
+    post:
+      summary: Create User Profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProfileRequestEnvelope'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users/contestant:
+    post:
+      summary: Create Contestant Profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContestantProfileRequestEnvelope'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users/login:
+    post:
+      summary: User Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestEnvelope'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /campaigns:
+    post:
+      summary: Create Campaign
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignRequestEnvelope'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /campaigns/activate:
+    post:
+      summary: Activate Campaign
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignRequestEnvelope'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /campaigns/{id}/activate:
+    post:
+      summary: Activate Campaign by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignRequestEnvelope'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /campaigns/pause:
+    post:
+      summary: Pause Campaign
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignRequestEnvelope'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /campaigns/{id}/pause:
+    post:
+      summary: Pause Campaign by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CampaignRequestEnvelope'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /campaigns/vote-period:
+    post:
+      summary: Update Campaign Vote Period
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVotePeriodRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /campaigns/{id}/vote-period:
+    post:
+      summary: Update Campaign Vote Period by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVotePeriodRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+components:
+  schemas:
+    Header:
+      type: object
+      properties:
+        authorization:
+          type: string
+        server:
+          type: string
+        timestamp:
+          type: string
+
+    UserPayloadData:
+      type: object
+      properties:
+        schema:
+          type: string
+        payload:
+          type: object
+
+    CreateProfileRequestEnvelope:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/Header'
+        request_data:
+          type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/UserPayloadData'
+
+    CreateContestantProfileRequestEnvelope:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/Header'
+        request_data:
+          type: object
+          properties:
+            user_info:
+              type: object
+              properties:
+                authorization:
+                  type: string
+            data:
+              $ref: '#/components/schemas/UserPayloadData'
+
+    LoginRequestEnvelope:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/Header'
+        data:
+          type: object
+          properties:
+            mode:
+              type: string
+              enum: [email, phone]
+            user:
+              type: string
+            password:
+              type: string
+            options:
+              type: object
+              properties:
+                return_keys:
+                  type: array
+                  items:
+                    type: string
+
+    CampaignRequestEnvelope:
+      type: object
+      properties:
+        header:
+          $ref: '#/components/schemas/Header'
+        request_data:
+          type: object
+          properties:
+            user_info:
+              type: object
+              properties:
+                authorization:
+                  type: string
+                id:
+                  type: object
+                  properties:
+                    organisation:
+                      type: string
+                      format: uuid
+                    campaign:
+                      type: string
+                      format: uuid
+            data:
+              $ref: '#/components/schemas/UserPayloadData'
+
+    UpdateVotePeriodRequest:
+      type: object
+      properties:
+        command:
+          type: string
+        request_data:
+          type: object
+          properties:
+            client_info:
+              type: object
+              properties:
+                token:
+                  type: string
+                organisation:
+                  type: string
+                  format: uuid
+                campaign:
+                  type: string
+                  format: uuid
+            data:
+              type: object
+              properties:
+                vote_starts_at:
+                  type: string
+                  format: date-time
+                vote_ends_at:
+                  type: string
+                  format: date-time
+
+    ClientInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        organisation:
+          type: string
+          format: uuid
+
+    ErrorInfo:
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+        field:
+          type: string
+
+    SuccessResponse:
+      type: object
+      properties:
+        client:
+          $ref: '#/components/schemas/ClientInfo'
+        data:
+          type: object
+
+    ErrorResponse:
+      type: object
+      properties:
+        client:
+          $ref: '#/components/schemas/ClientInfo'
+        error:
+          $ref: '#/components/schemas/ErrorInfo'

@@ -1,0 +1,17 @@
+{
+    "header": {
+        "authorization": "string",
+        "server": "frontend",
+        "timestamp": "string"
+    },
+    "request_data": {
+        "user_info": {
+            "authorization": "string",
+            "id": {
+                "organisation": "uuid.UUID",
+                "campaign": "uuid.UUID"
+            }
+        },
+        "data": {}
+    }
+}
